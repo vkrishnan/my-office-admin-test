@@ -1,5 +1,6 @@
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
+from django.http import Http404
 from django.template import RequestContext
 from django.contrib.auth import logout
 from order.forms import RegistrationForm
