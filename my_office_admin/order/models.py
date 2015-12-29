@@ -1,5 +1,6 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
+from django.contrib.auth.models import User
 
 REGION_CHOICES = (
     (10, 'INDIA'),
@@ -10,10 +11,15 @@ REGION_CHOICES = (
     (60, 'HSR LAYOUT'))
 
 class Customer(models.Model):
-    name = models.CharField(max_length=200)
-    contact_person = models.CharField(max_length=100)
+    #name = models.CharField(max_length=200)
+    user = models.OneToOneField(User)
+    #contact_person = models.CharField(max_length=100)
     contact_number = PhoneNumberField(unique=True)
     address = models.TextField(max_length=500)
+    
+    # Override the __unicode__() method to return out something meaningful!
+    def __unicode__(self):
+        return self.user.username
     
 class Order(models.Model):
     customer = models.ForeignKey(Customer)
