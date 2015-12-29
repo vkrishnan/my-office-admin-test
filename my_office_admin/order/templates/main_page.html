@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Welcome to My Office Admin{% endblock %}
+{% block head %}Welcome to My Office Admin{% endblock %}
+{% block content %}
+{% if user.username %}
+    <p>Welcome {{ user.username }}!
+        Here you can view and create orders!</p>
+{% else %}
+    <p>Welcome anonymous user!
+        You need to <a href="/login/">login</a>
+        before you can view and edit orders.</p>
+{% endif %}
+{% endblock %}
