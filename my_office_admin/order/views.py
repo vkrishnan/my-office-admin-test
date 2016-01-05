@@ -1,9 +1,10 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.http import Http404
 from django.template import RequestContext
 from django.contrib.auth import logout
 from order.forms import RegistrationForm
+from django.utils import timezone
 from django.contrib.auth.models import User
 
 # Create your views here.
@@ -14,17 +15,13 @@ def main_page(request):
         { 'user': request.user })
 
 def user_page(request, username):
-    try:
-        user = User.objects.get(username=username)
-    except:
-        raise Http404('Requested user not found.')
+    user = get_object_or_404(User, pk=username)
     
-    bookmarks = user.bookmark_set.all()
-    variables = RequestContext(request, {
-                'username': username,
-                'bookmarks': bookmarks})
+    orders = user.order_set.all()
+    context = { 'username': username,
+                'bookmarks': orders }
 
-    return render_to_response('user_page.html', variables)
+    return render(request, 'user_page.html', variables)
         
 def register_page(request):
     if request.method == 'POST':
@@ -40,10 +37,30 @@ def register_page(request):
 
     variables = RequestContext(request, {
                             'form': form})
-                        
+                         
     return render_to_response(
                 'registration/register.html', variables)
             
+
+def order_page(request):
+    if request.method == 'POST':
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            order = Order.objects.create(
+                                         user = request.user,
+                                         name = form.cleaned_data['name'],
+                                         category = form.cleaned_data['category'],
+                                         order_date = timezone.now()
+                                         )
+            return HttpResponseRedirect('/order/success/')
+    else:
+        form = OrderForm()
+        
+    variables = RequestContext(request, {
+                            'form': form})
+                         
+    return render_to_response(
+                'registration/order.html', variables)
 
 def logout_page(request):
     logout(request)

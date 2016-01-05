@@ -10,6 +10,7 @@ REGION_CHOICES = (
     (50, 'SOUTH BANGALORE'),
     (60, 'HSR LAYOUT'))
 
+'''
 class Customer(models.Model):
     #name = models.CharField(max_length=200)
     user = models.OneToOneField(User)
@@ -20,14 +21,15 @@ class Customer(models.Model):
     # Override the __unicode__() method to return out something meaningful!
     def __unicode__(self):
         return self.user.username
-    
+'''
+ 
 class Order(models.Model):
-    customer = models.ForeignKey(Customer)
+    user = models.ForeignKey(User)
     name = models.CharField(max_length=200)
     category = models.CharField(max_length=200)
     order_date = models.DateTimeField()
-    price = models.FloatField()
-    payment = models.FloatField()
+    #price = models.FloatField()
+    #payment = models.FloatField()
     
 class Vendor(models.Model):
     name = models.CharField(max_length=200)

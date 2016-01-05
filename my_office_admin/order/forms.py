@@ -1,7 +1,9 @@
-from .models import Customer
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django import forms
+from django.forms import ModelForm
+
+from models import Order
 import re
 
 #from django import newforms as forms
@@ -32,3 +34,9 @@ class RegistrationForm(forms.Form):
         except ObjectDoesNotExist:
             return username
         raise forms.ValidationError('Username is already taken.')
+    
+    
+class OrderForm(ModelForm):
+    class Meta:
+        model = Order
+        fields = ['name', 'category']
