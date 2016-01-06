@@ -3,48 +3,24 @@
 {% block head %}Welcome to My Office Admin{% endblock %}
 {% block content %}
 {% if user.username %}
-	{% if request.user.is_superuser %}
-		<p> Welcome Admin </p>
-		{% if orders %}
-	        <p><h2>Orders</h2></p>
-	        <table border="1" style="width:50%">
-	        	<tr>
-		        {% for order in orders %}
-		        	<td>{{ request.user.username }}</td>
-		        	<td>{{ order.name }}</td>
-		        	<td>{{ order.status }}</td>
-		        {% endfor %}
-		        </tr>
-		    </table>
-		    {% else %}
-		    	<p>No orders found</p>
-		    {% endif %}
-		
-		<tr>
-    		<td>Jill</td>
-    		<td>Smith</td> 
-    		<td>50</td>
-  		</tr>
-		</table>
+    <p>Welcome {{ user.username }}!
+    	Here you can view and create orders!</p>
+    {% if orders %}
+    	<p><h2>Orders</h2></p>
+        <table border="2" style="width:50%">
+        	<tr>
+	        {% for order in orders %}
+	        	<td>{{ order.name }}</td>
+	        	<td>{{ order.category }}</td>
+	        	<td>{{ order.order_date }}</td>
+	        	<td>{{ order.status }}</td>
+	        {% endfor %}
+	        </tr>
+	    </table><br/>
 	{% else %}
-	    <p>Welcome {{ user.username }}!
-	        Here you can view and create orders!</p>
-	        {% if orders %}
-	        <p><h2>Orders</h2></p>
-	        <table border="1" style="width:50%">
-	        	<tr>
-		        {% for order in orders %}
-		        	<td>{{ order.name }}</td>
-		        	<td>{{ order.category }}</td>
-		        	<td>{{ order.order_date }}</td>
-		        {% endfor %}
-		        </tr>
-		    </table><br/>
-		    {% else %}
-		    	<p>No orders found</p>
-		    {% endif %}
-	        Click <a href="/order/">here</a> to create a new order.
-    {% endif %}
+	    	<p>No orders found</p>
+	{% endif %}
+    Click <a href="/order/">here</a> to create a new order.
 {% else %}
     <p>Welcome anonymous user!
         You need to <a href="/login/">login</a>

@@ -61,7 +61,8 @@ def order_page(request):
                                          user = request.user,
                                          name = form.cleaned_data['name'],
                                          category = form.cleaned_data['category'],
-                                         order_date = timezone.now()
+                                         order_date = timezone.now(),
+                                         status = 'Pending'
                                          )
             return HttpResponseRedirect('/order/success/')
     else:
