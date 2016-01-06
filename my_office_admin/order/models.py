@@ -28,6 +28,7 @@ class Order(models.Model):
     name = models.CharField(max_length=200)
     category = models.CharField(max_length=200)
     order_date = models.DateTimeField()
+    status = models.CharField(max_length=200)
     #price = models.FloatField()
     #payment = models.FloatField()
     

@@ -11,10 +11,19 @@ from models import Order
 # Create your views here.
 
 def main_page(request):
+    if request.user.is_authenticated():
+        if request.user.is_superuser:
+            orders = Order.objects.all()
+            return HttpResponseRedirect('/admin')
+        else:
+            user = User.objects.get(username=request.user.username)
+            orders = user.order_set.all()
+    else:
+        orders = None
     return render_to_response(
         'main_page.html',
         { 'user': request.user,
-          'orders': Order.objects.all()})
+          'orders': orders})
 
 def user_page(request, username):
     user = get_object_or_404(User, pk=username)
