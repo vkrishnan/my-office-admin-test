@@ -4,7 +4,17 @@
 {% block content %}
 {% if user.username %}
     <p>Welcome {{ user.username }}!
-        Here you can view and create orders!</p><br/><br/>
+        Here you can view and create orders!</p>
+        {% if orders %}
+        <p><h2>Orders</h2></p>
+        <ol>
+	        {% for order in orders %}
+	        	<li>{{ order.name }}</li>
+	        {% endfor %}
+	    </ol>
+	    {% else %}
+	    	<p>No bookmarks found</p>
+	    {% endif %}
         Click <a href="/order/">here</a> to create a new order.
 {% else %}
     <p>Welcome anonymous user!

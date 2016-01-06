@@ -3,16 +3,18 @@ from django.http import HttpResponseRedirect
 from django.http import Http404
 from django.template import RequestContext
 from django.contrib.auth import logout
-from order.forms import RegistrationForm
+from order.forms import RegistrationForm, OrderForm
 from django.utils import timezone
 from django.contrib.auth.models import User
+from models import Order
 
 # Create your views here.
 
 def main_page(request):
     return render_to_response(
         'main_page.html',
-        { 'user': request.user })
+        { 'user': request.user,
+          'orders': Order.objects.all()})
 
 def user_page(request, username):
     user = get_object_or_404(User, pk=username)
