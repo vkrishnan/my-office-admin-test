@@ -1,5 +1,7 @@
 from django.shortcuts import render_to_response, get_object_or_404
+from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponseRedirect
+from django.core.mail import send_mail
 from django.http import Http404
 from django.template import RequestContext
 from django.contrib.auth import logout
@@ -33,7 +35,8 @@ def user_page(request, username):
                 'bookmarks': orders }
 
     return render(request, 'user_page.html', variables)
-        
+
+@staff_member_required      
 def register_page(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
